@@ -16,18 +16,31 @@ public class GenerationService {
         this.generationRepository = generationRepository;
     }
 
+    // Create generation log with validation
     public GenerationLog createGeneration(GenerationLog generationLog) {
+
+        if (generationLog.getUnitsGenerated() == null ||
+                generationLog.getUnitsGenerated() <= 0) {
+
+            throw new RuntimeException(
+                    "Units generated must be greater than 0"
+            );
+        }
+
         return generationRepository.save(generationLog);
     }
 
+    // Get all generation logs
     public List<GenerationLog> getAllGenerations() {
         return generationRepository.findAll();
     }
 
+    // Get generation by ID
     public Optional<GenerationLog> getGenerationById(Long id) {
         return generationRepository.findById(id);
     }
 
+    // Delete generation
     public void deleteGeneration(Long id) {
         generationRepository.deleteById(id);
     }
