@@ -10,230 +10,649 @@
 
     <title>SolarShare | Generation</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
+
 
     <style>
 
+        /* =====================================================
+           GENERATION PAGE
+        ===================================================== */
+
         .generation-page {
-            padding: 45px 0 80px;
+            background: #f7faf8;
+            min-height: 100vh;
         }
 
-        .generation-stats {
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .generation-hero {
+            padding: 70px 0;
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            rgba(20, 70, 40, 0.92),
+                            rgba(30, 110, 60, 0.78)
+                    ),
+                    url("https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1800&q=85")
+                    center / cover no-repeat;
+
+            color: white;
+        }
+
+
+        .generation-hero h1 {
+            font-size: 48px;
+            margin: 15px 0;
+        }
+
+
+        .generation-hero p {
+            max-width: 760px;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: #edf8f0;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .generation-container {
+            padding: 55px 0 80px;
+        }
+
+
+        /* =====================================================
+           INTRO SECTION
+        ===================================================== */
+
+        .generation-intro {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-bottom: 35px;
-        }
 
-        .generation-card {
-            background: white;
-            border: 1px solid #e1e8e3;
-            border-radius: 20px;
-            padding: 28px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-        }
+            grid-template-columns:
+                1fr 1fr;
 
-        .generation-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 15px;
-            background: #edf8f0;
-            display: flex;
+            gap: 50px;
+
             align-items: center;
-            justify-content: center;
-            font-size: 27px;
+
+            margin-bottom: 55px;
+        }
+
+
+        .generation-image {
+            width: 100%;
+
+            height: 430px;
+
+            overflow: hidden;
+
+            border-radius: 24px;
+
+            background: #e8f2eb;
+
+            box-shadow:
+                    0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .generation-image img {
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+
+        .generation-text .badge {
+            display: inline-block;
+
+            margin-bottom: 18px;
+        }
+
+
+        .generation-text h2 {
+            font-size: 38px;
+
+            color: #163b23;
+
+            margin: 0 0 20px;
+        }
+
+
+        .generation-text p {
+            color: #66756c;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
             margin-bottom: 20px;
         }
 
-        .generation-card h2 {
-            margin: 0 0 8px;
-            font-size: 30px;
-        }
 
-        .generation-card p {
-            margin: 0;
-            color: #68756c;
-        }
-
-        .generation-section {
-            background: white;
-            border: 1px solid #e1e8e3;
-            border-radius: 22px;
-            padding: 30px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-        }
-
-        .section-top {
+        .generation-points {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+            margin: 25px 0;
+        }
+
+
+        .generation-point {
+            background: #edf7f0;
+
+            padding: 16px 20px;
+
+            border-radius: 12px;
+
+            color: #194d2d;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .generation-summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 20px;
+
+            margin-bottom: 40px;
+        }
+
+
+        .generation-summary-card {
+            background: white;
+
+            border: 1px solid #e0e9e3;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                    0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .generation-summary-card h3 {
+            margin: 0 0 10px;
+
+            color: #6d7971;
+
+            font-size: 15px;
+        }
+
+
+        .generation-summary-value {
+            color: #197b42;
+
+            font-size: 32px;
+
+            font-weight: 700;
+        }
+
+
+        .generation-summary-unit {
+            color: #7b877e;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           TABLE SECTION
+        ===================================================== */
+
+        .generation-table-card {
+            background: white;
+
+            border: 1px solid #e0e9e3;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                    0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .generation-table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
             margin-bottom: 25px;
         }
 
-        .section-top h2 {
-            margin: 0 0 7px;
+
+        .generation-table-header h2 {
+            margin: 0;
+
+            color: #163b23;
+
+            font-size: 28px;
         }
 
-        .section-top p {
-            margin: 0;
-            color: #68756c;
+
+        .generation-table-header p {
+            color: #758078;
+
+            margin: 7px 0 0;
         }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
 
         .generation-table-wrapper {
             overflow-x: auto;
         }
 
+
         .generation-table {
             width: 100%;
+
             border-collapse: collapse;
+
             min-width: 650px;
         }
 
+
         .generation-table th {
-            background: #f3f7f4;
+            background: #edf6f0;
+
+            color: #31553d;
+
             text-align: left;
+
             padding: 16px;
+
+            font-size: 14px;
+
+            border-bottom: 1px solid #dce7df;
         }
+
 
         .generation-table td {
-            padding: 17px 16px;
-            border-bottom: 1px solid #e7ece8;
+            padding: 16px;
+
+            border-bottom: 1px solid #edf0ee;
+
+            color: #4e5c53;
         }
 
-        .action-buttons {
+
+        .generation-table tr:hover {
+            background: #fafcfb;
+        }
+
+
+        .generation-value {
+            font-weight: 700;
+
+            color: #197b42;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .generation-actions {
             display: flex;
+
             gap: 8px;
+
+            flex-wrap: wrap;
         }
 
-        .edit-btn,
-        .delete-btn {
+
+        .generation-btn {
             border: none;
+
             border-radius: 8px;
-            padding: 8px 14px;
+
+            padding: 8px 13px;
+
             cursor: pointer;
+
             font-weight: 600;
+
+            font-size: 13px;
         }
 
-        .edit-btn {
-            background: #e8f1ff;
-            color: #2161a8;
+
+        .generation-btn.edit {
+            background: #e9f3ec;
+
+            color: #176b38;
         }
 
-        .delete-btn {
-            background: #ffecec;
-            color: #c62828;
+
+        .generation-btn.edit:hover {
+            background: #dcece1;
         }
 
-        .modal-overlay {
+
+        .generation-btn.delete {
+            background: #fff0f0;
+
+            color: #b33434;
+        }
+
+
+        .generation-btn.delete:hover {
+            background: #ffe1e1;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .generation-empty {
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #78847c;
+
             display: none;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .generation-message {
+            padding: 14px 18px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            display: none;
+
+            line-height: 1.5;
+        }
+
+
+        .generation-message.success {
+            display: block;
+
+            background: #eaf7ee;
+
+            color: #176b38;
+
+            border: 1px solid #c9e7d1;
+        }
+
+
+        .generation-message.error {
+            display: block;
+
+            background: #fff0f0;
+
+            color: #a33232;
+
+            border: 1px solid #efc6c6;
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .generation-modal {
             position: fixed;
+
             inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            display: none;
+
             align-items: center;
+
             justify-content: center;
+
             padding: 20px;
+
+            z-index: 9999;
         }
 
-        .modal-box {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            border-radius: 22px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
 
-        .modal-header {
+        .generation-modal.show {
             display: flex;
+        }
+
+
+        .generation-modal-content {
+            background: white;
+
+            width: 100%;
+
+            max-width: 560px;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                    0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .generation-modal-header {
+            display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 25px;
         }
 
-        .modal-header h2 {
+
+        .generation-modal-header h2 {
             margin: 0;
+
+            color: #173b23;
         }
 
-        .close-button {
+
+        .generation-close {
             border: none;
-            background: #f1f4f2;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            font-size: 22px;
+
+            background: transparent;
+
+            font-size: 30px;
+
             cursor: pointer;
+
+            color: #66756c;
+
+            line-height: 1;
         }
 
-        .form-group {
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .generation-form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+
+        .generation-form-group label {
             display: block;
+
             margin-bottom: 8px;
-            font-weight: 700;
+
+            color: #31483a;
+
+            font-weight: 600;
         }
 
-        .form-group input {
+
+        .generation-form-group input {
             width: 100%;
+
             box-sizing: border-box;
-            padding: 14px;
-            border: 1px solid #d4dfd8;
-            border-radius: 12px;
-            font-size: 16px;
-        }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #218447;
-        }
+            padding: 13px 14px;
 
-        .save-button {
-            width: 100%;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            background: #218447;
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+            border: 1px solid #ccd9cf;
 
-        .save-button:hover {
-            background: #176b37;
-        }
-
-        .message-box {
-            margin-top: 18px;
-            padding: 15px;
             border-radius: 10px;
-            display: none;
+
+            font-size: 15px;
+
+            outline: none;
         }
 
-        .message-success {
-            display: block;
-            background: #edf9f0;
-            color: #21733c;
+
+        .generation-form-group input:focus {
+            border-color: #21854a;
+
+            box-shadow:
+                    0 0 0 3px rgba(33, 133, 74, 0.10);
         }
 
-        .message-error {
-            display: block;
-            background: #fff0f0;
-            color: #c62828;
+
+        .generation-form-buttons {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 25px;
         }
 
-        @media (max-width: 800px) {
 
-            .generation-stats {
+        .generation-submit {
+            border: none;
+
+            background: #21854a;
+
+            color: white;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+
+        .generation-submit:hover {
+            background: #176c3a;
+        }
+
+
+        .generation-cancel {
+            border: 1px solid #ccd9cf;
+
+            background: white;
+
+            color: #31553d;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .generation-intro {
                 grid-template-columns: 1fr;
             }
 
-            .section-top {
+
+            .generation-summary {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .generation-hero h1 {
+                font-size: 36px;
+            }
+
+
+            .generation-text h2 {
+                font-size: 30px;
+            }
+
+
+            .generation-image {
+                height: 280px;
+            }
+
+
+            .generation-summary {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .generation-table-card {
+                padding: 20px;
+            }
+
+
+            .generation-table-header {
                 flex-direction: column;
-                align-items: stretch;
+
+                align-items: flex-start;
             }
 
         }
@@ -243,10 +662,12 @@
 </head>
 
 
-<body>
+<body class="generation-page">
 
 
-<!-- ================= NAVBAR ================= -->
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
 <nav class="navbar">
 
@@ -255,6 +676,7 @@
         <div class="logo">
             SolarShare
         </div>
+
 
         <div class="nav-links">
 
@@ -294,9 +716,12 @@
 </nav>
 
 
-<!-- ================= HERO ================= -->
 
-<section class="page-hero">
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="generation-hero">
 
     <div class="container">
 
@@ -304,13 +729,19 @@
             SOLAR GENERATION
         </span>
 
+
         <h1>
-            Solar Generation
+            Generate Clean Energy From the Sun
         </h1>
 
+
         <p>
-            Record and manage the solar energy generated
-            by your community.
+
+            Record and monitor solar electricity
+            generation through the SolarShare platform.
+            Generation records help track renewable
+            energy production over time.
+
         </p>
 
     </div>
@@ -318,200 +749,342 @@
 </section>
 
 
-<!-- ================= MAIN ================= -->
 
-<main class="container generation-page">
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="generation-container">
+
+    <div class="container">
 
 
-    <!-- ================= STATS ================= -->
+        <!-- =================================================
+             IMAGE + INFORMATION
+        ================================================== -->
 
-    <div class="generation-stats">
+        <section class="generation-intro">
 
 
-        <div class="generation-card">
+            <!-- IMAGE -->
 
-            <div class="generation-icon">
-                ☀️
+            <div class="generation-image">
+
+                <img
+                        src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1200&q=85"
+                        alt="Solar panels and clean energy">
+
             </div>
 
-            <h2 id="totalGeneration">
-                0.00 kWh
-            </h2>
-
-            <p>
-                Total Generation
-            </p>
-
-        </div>
 
 
-        <div class="generation-card">
+            <!-- TEXT -->
 
-            <div class="generation-icon">
-                ⚡
-            </div>
+            <div class="generation-text">
 
-            <h2 id="todayGeneration">
-                0.00 kWh
-            </h2>
+                <span class="badge">
+                    CLEAN ENERGY
+                </span>
 
-            <p>
-                Today's Generation
-            </p>
-
-        </div>
-
-
-        <div class="generation-card">
-
-            <div class="generation-icon">
-                📊
-            </div>
-
-            <h2 id="recordCount">
-                0
-            </h2>
-
-            <p>
-                Generation Records
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= TABLE ================= -->
-
-    <div class="generation-section">
-
-
-        <div class="section-top">
-
-            <div>
 
                 <h2>
-                    Generation Records
+                    Generate Clean Energy From the Sun
                 </h2>
 
+
                 <p>
-                    View, add, edit and delete solar
-                    generation records.
+
+                    Solar panels convert sunlight into
+                    electricity that can be monitored
+                    and shared through the SolarShare
+                    platform.
+
                 </p>
+
+
+                <p>
+
+                    Generation records allow users to
+                    understand how much renewable energy
+                    is being produced over time.
+
+                </p>
+
+
+                <div class="generation-points">
+
+                    <div class="generation-point">
+                        ✓ Track daily solar generation
+                    </div>
+
+                    <div class="generation-point">
+                        ✓ Monitor renewable energy production
+                    </div>
+
+                    <div class="generation-point">
+                        ✓ Maintain generation history
+                    </div>
+
+                </div>
+
+
+                <button
+                        class="btn btn-primary"
+                        onclick="openGenerationModal()">
+
+                    + Add Generation
+
+                </button>
 
             </div>
 
 
-            <button
-                    class="btn btn-primary"
-                    onclick="openAddModal()">
-
-                + Add Generation
-
-            </button>
-
-        </div>
+        </section>
 
 
-        <div class="generation-table-wrapper">
 
-            <table class="generation-table">
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
 
-                <thead>
-
-                <tr>
-
-                    <th>
-                        ID
-                    </th>
-
-                    <th>
-                        Generation Date
-                    </th>
-
-                    <th>
-                        Units Generated
-                    </th>
-
-                    <th>
-                        Actions
-                    </th>
-
-                </tr>
-
-                </thead>
+        <section class="generation-summary">
 
 
-                <tbody id="generationTable">
+            <div class="generation-summary-card">
 
-                <tr>
+                <h3>
+                    Total Generation
+                </h3>
 
-                    <td colspan="4"
-                        style="text-align:center; padding:30px;">
+                <div
+                        class="generation-summary-value"
+                        id="totalGeneration">
 
-                        Loading...
+                    0
 
-                    </td>
+                </div>
 
-                </tr>
+                <span class="generation-summary-unit">
+                    kWh
+                </span>
 
-                </tbody>
-
-            </table>
-
-        </div>
+            </div>
 
 
-        <div id="pageMessage"
-             class="message-box">
-        </div>
+
+            <div class="generation-summary-card">
+
+                <h3>
+                    Today's Generation
+                </h3>
+
+                <div
+                        class="generation-summary-value"
+                        id="todayGeneration">
+
+                    0
+
+                </div>
+
+                <span class="generation-summary-unit">
+                    kWh
+                </span>
+
+            </div>
+
+
+
+            <div class="generation-summary-card">
+
+                <h3>
+                    Generation Records
+                </h3>
+
+                <div
+                        class="generation-summary-value"
+                        id="generationRecords">
+
+                    0
+
+                </div>
+
+                <span class="generation-summary-unit">
+                    records
+                </span>
+
+            </div>
+
+
+
+            <div class="generation-summary-card">
+
+                <h3>
+                    Renewable Energy
+                </h3>
+
+                <div
+                        class="generation-summary-value">
+
+                    100%
+
+                </div>
+
+                <span class="generation-summary-unit">
+                    clean source
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TABLE
+        ================================================== -->
+
+        <section class="generation-table-card">
+
+
+            <div class="generation-table-header">
+
+                <div>
+
+                    <h2>
+                        Generation Records
+                    </h2>
+
+                    <p>
+                        View and manage all solar generation records.
+                    </p>
+
+                </div>
+
+
+                <button
+                        class="btn btn-primary"
+                        onclick="openGenerationModal()">
+
+                    + Add Generation
+
+                </button>
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <div
+                    id="generationMessage"
+                    class="generation-message">
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="generation-table-wrapper">
+
+                <table class="generation-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Generation Date
+                        </th>
+
+                        <th>
+                            Units Generated
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="generationTableBody">
+
+                    </tbody>
+
+                </table>
+
+
+                <div
+                        id="generationEmpty"
+                        class="generation-empty">
+
+                    No generation records found.
+
+                </div>
+
+            </div>
+
+
+        </section>
 
 
     </div>
-
 
 </main>
 
 
-<!-- ================= MODAL ================= -->
 
-<div id="generationModal"
-     class="modal-overlay">
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+        id="generationModal"
+        class="generation-modal">
 
 
-    <div class="modal-box">
+    <div class="generation-modal-content">
 
 
-        <div class="modal-header">
+        <div class="generation-modal-header">
 
-            <h2 id="modalTitle">
+            <h2 id="generationModalTitle">
                 Add Generation
             </h2>
 
-            <button
-                    class="close-button"
-                    onclick="closeModal()">
 
-                ×
+            <button
+                    class="generation-close"
+                    onclick="closeGenerationModal()">
+
+                &times;
 
             </button>
 
         </div>
 
 
-        <form id="generationForm">
+
+        <form
+                id="generationForm"
+                onsubmit="saveGeneration(event)">
 
 
-            <input
-                    type="hidden"
-                    id="generationId">
-
-
-            <div class="form-group">
+            <div class="generation-form-group">
 
                 <label for="generationDate">
+
                     Generation Date
+
                 </label>
+
 
                 <input
                         type="date"
@@ -521,38 +1094,53 @@
             </div>
 
 
-            <div class="form-group">
+
+            <div class="generation-form-group">
 
                 <label for="unitsGenerated">
+
                     Units Generated (kWh)
+
                 </label>
+
 
                 <input
                         type="number"
                         id="unitsGenerated"
-                        step="0.01"
                         min="0.01"
-                        placeholder="Enter units generated"
+                        step="0.01"
+                        placeholder="Example: 200"
                         required>
 
             </div>
 
 
-            <button
-                    type="submit"
-                    class="save-button">
 
-                Save Generation
+            <div class="generation-form-buttons">
 
-            </button>
+                <button
+                        type="button"
+                        class="generation-cancel"
+                        onclick="closeGenerationModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                        type="submit"
+                        class="generation-submit"
+                        id="generationSubmitButton">
+
+                    Add Generation
+
+                </button>
+
+            </div>
 
 
         </form>
-
-
-        <div id="modalMessage"
-             class="message-box">
-        </div>
 
 
     </div>
@@ -560,234 +1148,315 @@
 </div>
 
 
-<!-- ================= JAVASCRIPT ================= -->
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <p>
+
+            © 2026 SolarShare.
+            Smart Solar Energy Sharing Platform.
+
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script>
 
 
-    const API_URL =
-        "http://localhost:8080/api/generations";
+    /*
+     * =====================================================
+     * VARIABLES
+     * =====================================================
+     */
+
+    let editingGenerationId = null;
 
 
-    let editingId = null;
 
-
-    /* =========================
-       LOAD GENERATIONS
-    ========================= */
+    /*
+     * =====================================================
+     * LOAD GENERATION RECORDS
+     * =====================================================
+     *
+     * Execution:
+     *
+     * Browser
+     *     ↓
+     * GET /api/generations
+     *     ↓
+     * GenerationController
+     *     ↓
+     * GenerationService
+     *     ↓
+     * GenerationRepository
+     *     ↓
+     * MySQL
+     *     ↓
+     * JSON response
+     *     ↓
+     * Browser
+     *
+     * =====================================================
+     */
 
     async function loadGenerations() {
-
-        const table =
-            document.getElementById("generationTable");
 
         try {
 
             const response =
-                await fetch(API_URL);
+                await fetch("api/generations");
 
 
             if (!response.ok) {
 
                 throw new Error(
-                    "HTTP " + response.status
+                    "Unable to load generation records"
                 );
 
             }
 
 
-            const data =
+            const generations =
                 await response.json();
 
 
-            table.innerHTML = "";
+            displayGenerations(generations);
 
 
-            if (!data || data.length === 0) {
+        } catch (error) {
 
-                table.innerHTML = `
-
-                <tr>
-
-                    <td colspan="4"
-                        style="text-align:center; padding:30px;">
-
-                        No generation records found.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-                updateStats([]);
-
-                return;
-
-            }
+            console.error(error);
 
 
-            data.forEach(item => {
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-
-                <td>
-                    ${item.generationId}
-                </td>
-
-                <td>
-                    ${item.generationDate}
-                </td>
-
-                <td>
-                    <strong>
-                        ${Number(
-                    item.unitsGenerated
-                ).toFixed(2)}
-                        kWh
-                    </strong>
-                </td>
-
-                <td>
-
-                    <div class="action-buttons">
-
-                        <button
-                            class="edit-btn"
-                            onclick="editGeneration(
-                                ${item.generationId}
-                            )">
-
-                            Edit
-
-                        </button>
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteGeneration(
-                                ${item.generationId}
-                            )">
-
-                            Delete
-
-                        </button>
-
-                    </div>
-
-                </td>
-
-            `;
-
-
-                table.appendChild(row);
-
-            });
-
-
-            updateStats(data);
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Generation error:",
-                error
+            showMessage(
+                "Unable to connect to SolarShare backend. Make sure Spring Boot is running on port 8080.",
+                "error"
             );
-
-
-            table.innerHTML = `
-
-            <tr>
-
-                <td colspan="4"
-                    style="text-align:center; padding:30px; color:#c62828;">
-
-                    Unable to load generation records.
-
-                </td>
-
-            </tr>
-
-        `;
 
         }
 
     }
 
 
-    /* =========================
-       UPDATE STATS
-    ========================= */
 
-    function updateStats(data) {
+    /*
+     * =====================================================
+     * DISPLAY RECORDS
+     * =====================================================
+     */
+
+    function displayGenerations(generations) {
+
+        const tableBody =
+            document.getElementById(
+                "generationTableBody"
+            );
+
+
+        const empty =
+            document.getElementById(
+                "generationEmpty"
+            );
+
+
+        tableBody.innerHTML = "";
+
+
+        if (
+            !generations ||
+            generations.length === 0
+        ) {
+
+            empty.style.display = "block";
+
+            updateSummary([]);
+
+            return;
+
+        }
+
+
+        empty.style.display = "none";
+
+
+        generations.forEach(
+            function (generation) {
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                const id =
+                    generation.generationId;
+
+
+                const date =
+                    generation.generationDate;
+
+
+                const units =
+                    Number(
+                        generation.unitsGenerated
+                    ) || 0;
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${id}
+                    </td>
+
+                    <td>
+                        ${date}
+                    </td>
+
+                    <td class="generation-value">
+                        ${units.toFixed(2)} kWh
+                    </td>
+
+                    <td>
+
+                        <div class="generation-actions">
+
+                            <button
+                                class="generation-btn edit"
+                                onclick="editGeneration(
+                                    ${id},
+                                    '${date}',
+                                    ${units}
+                                )">
+
+                                Edit
+
+                            </button>
+
+
+                            <button
+                                class="generation-btn delete"
+                                onclick="deleteGeneration(${id})">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            }
+        );
+
+
+        updateSummary(generations);
+
+    }
+
+
+
+    /*
+     * =====================================================
+     * SUMMARY
+     * =====================================================
+     */
+
+    function updateSummary(generations) {
 
         let total = 0;
 
         let today = 0;
 
 
-        const todayDate =
+        const currentDate =
             new Date()
                 .toISOString()
                 .split("T")[0];
 
 
-        data.forEach(item => {
+        generations.forEach(
+            function (generation) {
 
-            const units =
-                Number(item.unitsGenerated || 0);
+                const units =
+                    Number(
+                        generation.unitsGenerated
+                    ) || 0;
 
 
-            total += units;
+                total += units;
 
 
-            if (
-                item.generationDate === todayDate
-            ) {
+                if (
+                    generation.generationDate ===
+                    currentDate
+                ) {
 
-                today += units;
+                    today += units;
+
+                }
 
             }
-
-        });
+        );
 
 
         document.getElementById(
             "totalGeneration"
         ).textContent =
-            total.toFixed(2) + " kWh";
+            total.toFixed(2);
 
 
         document.getElementById(
             "todayGeneration"
         ).textContent =
-            today.toFixed(2) + " kWh";
+            today.toFixed(2);
 
 
         document.getElementById(
-            "recordCount"
+            "generationRecords"
         ).textContent =
-            data.length;
+            generations.length;
 
     }
 
 
-    /* =========================
-       OPEN ADD MODAL
-    ========================= */
 
-    function openAddModal() {
+    /*
+     * =====================================================
+     * OPEN ADD MODAL
+     * =====================================================
+     */
 
-        editingId = null;
+    function openGenerationModal() {
+
+        editingGenerationId = null;
 
 
         document.getElementById(
-            "modalTitle"
+            "generationModalTitle"
+        ).textContent =
+            "Add Generation";
+
+
+        document.getElementById(
+            "generationSubmitButton"
         ).textContent =
             "Add Generation";
 
@@ -797,21 +1466,9 @@
         ).reset();
 
 
-        document.getElementById(
-            "generationId"
-        ).value = "";
-
-
-        document.getElementById(
-            "modalMessage"
-        ).innerHTML = "";
-
-
-        document.getElementById(
-            "generationModal"
-        ).style.display =
-            "flex";
-
+        /*
+         * Automatically set today's date
+         */
 
         document.getElementById(
             "generationDate"
@@ -820,94 +1477,291 @@
                 .toISOString()
                 .split("T")[0];
 
-    }
-
-
-    /* =========================
-       CLOSE MODAL
-    ========================= */
-
-    function closeModal() {
 
         document.getElementById(
             "generationModal"
-        ).style.display =
-            "none";
+        ).classList.add("show");
 
     }
 
 
-    /* =========================
-       EDIT
-    ========================= */
 
-    async function editGeneration(id) {
+    /*
+     * =====================================================
+     * CLOSE MODAL
+     * =====================================================
+     */
+
+    function closeGenerationModal() {
+
+        document.getElementById(
+            "generationModal"
+        ).classList.remove("show");
+
+    }
+
+
+
+    /*
+     * =====================================================
+     * EDIT GENERATION
+     * =====================================================
+     */
+
+    function editGeneration(
+        id,
+        date,
+        units
+    ) {
+
+        editingGenerationId = id;
+
+
+        document.getElementById(
+            "generationModalTitle"
+        ).textContent =
+            "Edit Generation";
+
+
+        document.getElementById(
+            "generationSubmitButton"
+        ).textContent =
+            "Update Generation";
+
+
+        document.getElementById(
+            "generationDate"
+        ).value =
+            date;
+
+
+        document.getElementById(
+            "unitsGenerated"
+        ).value =
+            units;
+
+
+        document.getElementById(
+            "generationModal"
+        ).classList.add("show");
+
+    }
+
+
+
+    /*
+     * =====================================================
+     * SAVE GENERATION
+     * =====================================================
+     *
+     * ADD:
+     *
+     * POST /api/generations
+     *
+     *
+     * UPDATE:
+     *
+     * PUT /api/generations/{id}
+     *
+     * =====================================================
+     */
+
+    async function saveGeneration(event) {
+
+        event.preventDefault();
+
+
+        const date =
+            document.getElementById(
+                "generationDate"
+            ).value;
+
+
+        const units =
+            Number(
+                document.getElementById(
+                    "unitsGenerated"
+                ).value
+            );
+
+
+        /*
+         * Validation
+         */
+
+        if (!date) {
+
+            showMessage(
+                "Please select a generation date.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !units ||
+            units <= 0
+        ) {
+
+            showMessage(
+                "Units generated must be greater than 0.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const data = {
+
+            generationDate: date,
+
+            unitsGenerated: units
+
+        };
+
 
         try {
 
-            const response =
-                await fetch(
-                    `${API_URL}/${id}`
-                );
+            let response;
+
+
+            /*
+             * UPDATE
+             */
+
+            if (
+                editingGenerationId !== null
+            ) {
+
+                response =
+                    await fetch(
+                        `api/generations/${editingGenerationId}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(data)
+                        }
+                    );
+
+            }
+
+
+            /*
+             * ADD
+             */
+
+            else {
+
+                response =
+                    await fetch(
+                        "api/generations",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(data)
+                        }
+                    );
+
+            }
 
 
             if (!response.ok) {
 
+                let errorMessage =
+                    "Unable to save generation record.";
+
+
+                try {
+
+                    const errorData =
+                        await response.json();
+
+
+                    if (
+                        errorData.message
+                    ) {
+
+                        errorMessage =
+                            errorData.message;
+
+                    }
+
+                } catch (e) {
+
+                    // Ignore JSON parsing error
+
+                }
+
+
                 throw new Error(
-                    "Unable to get generation"
+                    errorMessage
                 );
 
             }
 
 
-            const data =
-                await response.json();
+            /*
+             * Close modal
+             */
+
+            closeGenerationModal();
 
 
-            editingId = id;
+            /*
+             * Reload records
+             */
+
+            await loadGenerations();
 
 
-            document.getElementById(
-                "modalTitle"
-            ).textContent =
-                "Edit Generation";
+            /*
+             * Success message
+             */
+
+            if (
+                editingGenerationId !== null
+            ) {
+
+                showMessage(
+                    "Generation record updated successfully.",
+                    "success"
+                );
+
+            } else {
+
+                showMessage(
+                    "Generation record added successfully.",
+                    "success"
+                );
+
+            }
 
 
-            document.getElementById(
-                "generationId"
-            ).value =
-                data.generationId;
+        } catch (error) {
+
+            console.error(error);
 
 
-            document.getElementById(
-                "generationDate"
-            ).value =
-                data.generationDate;
-
-
-            document.getElementById(
-                "unitsGenerated"
-            ).value =
-                data.unitsGenerated;
-
-
-            document.getElementById(
-                "modalMessage"
-            ).innerHTML = "";
-
-
-            document.getElementById(
-                "generationModal"
-            ).style.display =
-                "flex";
-
-        }
-
-        catch (error) {
-
-            showPageMessage(
+            showMessage(
                 error.message,
-                false
+                "error"
             );
 
         }
@@ -915,178 +1769,34 @@
     }
 
 
-    /* =========================
-       SAVE / UPDATE
-    ========================= */
 
-    document.getElementById(
-        "generationForm"
-    ).addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-
-            const generationDate =
-                document.getElementById(
-                    "generationDate"
-                ).value;
-
-
-            const unitsGenerated =
-                Number(
-                    document.getElementById(
-                        "unitsGenerated"
-                    ).value
-                );
-
-
-            if (!generationDate) {
-
-                showModalMessage(
-                    "Please select a generation date.",
-                    false
-                );
-
-                return;
-
-            }
-
-
-            if (
-                !unitsGenerated ||
-                unitsGenerated <= 0
-            ) {
-
-                showModalMessage(
-                    "Units generated must be greater than 0.",
-                    false
-                );
-
-                return;
-
-            }
-
-
-            const body = {
-
-                generationDate:
-                generationDate,
-
-                unitsGenerated:
-                unitsGenerated
-
-            };
-
-
-            try {
-
-                let response;
-
-
-                if (editingId) {
-
-                    response =
-                        await fetch(
-                            `${API_URL}/${editingId}`,
-                            {
-                                method: "PUT",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify(body)
-                            }
-                        );
-
-                }
-
-                else {
-
-                    response =
-                        await fetch(
-                            API_URL,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify(body)
-                            }
-                        );
-
-                }
-
-
-                if (!response.ok) {
-
-                    const errorText =
-                        await response.text();
-
-
-                    throw new Error(
-                        errorText ||
-                        "Request failed"
-                    );
-
-                }
-
-
-                closeModal();
-
-
-                showPageMessage(
-                    editingId
-                        ? "Generation updated successfully."
-                        : "Generation added successfully.",
-                    true
-                );
-
-
-                editingId = null;
-
-
-                await loadGenerations();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Save generation error:",
-                    error
-                );
-
-
-                showModalMessage(
-                    "Failed to connect to SolarShare backend. " +
-                    error.message,
-                    false
-                );
-
-            }
-
-        }
-    );
-
-
-    /* =========================
-       DELETE
-    ========================= */
+    /*
+     * =====================================================
+     * DELETE GENERATION
+     * =====================================================
+     *
+     * Browser
+     *     ↓
+     * DELETE /api/generations/{id}
+     *     ↓
+     * GenerationController
+     *     ↓
+     * GenerationService
+     *     ↓
+     * GenerationRepository.deleteById()
+     *     ↓
+     * MySQL
+     *
+     * =====================================================
+     */
 
     async function deleteGeneration(id) {
 
         const confirmed =
             confirm(
-                "Are you sure you want to delete this generation record?"
+                "Are you sure you want to delete generation record "
+                + id
+                + "?"
             );
 
 
@@ -1101,7 +1811,7 @@
 
             const response =
                 await fetch(
-                    `${API_URL}/${id}`,
+                    `api/generations/${id}`,
                     {
                         method: "DELETE"
                     }
@@ -1110,34 +1820,56 @@
 
             if (!response.ok) {
 
+                let errorMessage =
+                    "Unable to delete generation record.";
+
+
+                try {
+
+                    const errorData =
+                        await response.json();
+
+
+                    if (
+                        errorData.message
+                    ) {
+
+                        errorMessage =
+                            errorData.message;
+
+                    }
+
+                } catch (e) {
+
+                    // Ignore JSON parsing error
+
+                }
+
+
                 throw new Error(
-                    "Delete failed"
+                    errorMessage
                 );
 
             }
 
 
-            showPageMessage(
-                "Generation deleted successfully.",
-                true
-            );
-
-
             await loadGenerations();
 
-        }
 
-        catch (error) {
-
-            console.error(
-                "Delete error:",
-                error
+            showMessage(
+                "Generation record deleted successfully.",
+                "success"
             );
 
 
-            showPageMessage(
-                "Failed to delete generation.",
-                false
+        } catch (error) {
+
+            console.error(error);
+
+
+            showMessage(
+                error.message,
+                "error"
             );
 
         }
@@ -1145,18 +1877,21 @@
     }
 
 
-    /* =========================
-       MESSAGES
-    ========================= */
 
-    function showModalMessage(
+    /*
+     * =====================================================
+     * MESSAGE
+     * =====================================================
+     */
+
+    function showMessage(
         message,
-        success
+        type
     ) {
 
         const element =
             document.getElementById(
-                "modalMessage"
+                "generationMessage"
             );
 
 
@@ -1165,48 +1900,67 @@
 
 
         element.className =
-            "message-box " +
-            (
-                success
-                    ? "message-success"
-                    : "message-error"
+            "generation-message "
+            + type;
+
+
+        /*
+         * Automatically hide
+         * success messages
+         */
+
+        if (
+            type === "success"
+        ) {
+
+            setTimeout(
+                function () {
+
+                    element.style.display =
+                        "none";
+
+                },
+                3500
             );
+
+        }
 
     }
 
 
-    function showPageMessage(
-        message,
-        success
-    ) {
 
-        const element =
-            document.getElementById(
-                "pageMessage"
-            );
+    /*
+     * =====================================================
+     * CLOSE MODAL WHEN CLICKING OUTSIDE
+     * =====================================================
+     */
+
+    document.getElementById(
+        "generationModal"
+    ).addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeGenerationModal();
+
+            }
+
+        }
+    );
 
 
-        element.textContent =
-            message;
 
-
-        element.className =
-            "message-box " +
-            (
-                success
-                    ? "message-success"
-                    : "message-error"
-            );
-
-    }
-
-
-    /* =========================
-       START
-    ========================= */
+    /*
+     * =====================================================
+     * INITIAL LOAD
+     * =====================================================
+     */
 
     loadGenerations();
-
 
 </script>
 
