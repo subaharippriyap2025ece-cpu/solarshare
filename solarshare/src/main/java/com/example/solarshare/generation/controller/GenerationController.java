@@ -2,48 +2,60 @@ package com.example.solarshare.generation.controller;
 
 import com.example.solarshare.generation.entity.GenerationLog;
 import com.example.solarshare.generation.service.GenerationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/generations")
-@Tag(name = "Generation", description = "APIs for managing daily solar generation")
+@CrossOrigin
 public class GenerationController {
 
-    private final GenerationService generationService;
+    private final GenerationService service;
 
-    public GenerationController(GenerationService generationService) {
-        this.generationService = generationService;
+    public GenerationController(GenerationService service) {
+        this.service = service;
     }
 
+    // CREATE
     @PostMapping
-    @Operation(summary = "Create a generation log")
-    public GenerationLog createGeneration(@RequestBody GenerationLog generationLog) {
-        return generationService.createGeneration(generationLog);
+    public GenerationLog addGeneration(
+            @RequestBody GenerationLog data) {
+
+        return service.addGeneration(data);
     }
 
+    // READ ALL
     @GetMapping
-    @Operation(summary = "Get all generation logs")
     public List<GenerationLog> getAllGenerations() {
-        return generationService.getAllGenerations();
+
+        return service.getAllGenerations();
     }
 
+    // READ ONE
     @GetMapping("/{id}")
-    @Operation(summary = "Get generation log by ID")
-    public ResponseEntity<GenerationLog> getGenerationById(@PathVariable Long id) {
-        return generationService.getGenerationById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public GenerationLog getGenerationById(
+            @PathVariable Long id) {
+
+        return service.getGenerationById(id);
     }
 
+    // UPDATE
+    @PutMapping("/{id}")
+    public GenerationLog updateGeneration(
+            @PathVariable Long id,
+            @RequestBody GenerationLog data) {
+
+        return service.updateGeneration(id, data);
+    }
+
+    // DELETE
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete generation log")
-    public ResponseEntity<Void> deleteGeneration(@PathVariable Long id) {
-        generationService.deleteGeneration(id);
-        return ResponseEntity.noContent().build();
+    public String deleteGeneration(
+            @PathVariable Long id) {
+
+        service.deleteGeneration(id);
+
+        return "Generation record deleted successfully";
     }
 }

@@ -9,5 +9,4 @@ public class SolarshareApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SolarshareApplication.class, args);
 	}
-
 }

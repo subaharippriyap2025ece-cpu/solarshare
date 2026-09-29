@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,7 @@ public class NetUsageService {
         this.consumptionRepository = consumptionRepository;
     }
 
+
     public double calculateNetExported(
             double generationShare,
             double consumption) {
@@ -43,73 +45,212 @@ public class NetUsageService {
         return netExported;
     }
 
+
+    // =========================================================
+    // GET SUMMARY FOR ONE HOUSEHOLD
+    // =========================================================
+
     public NetUsageSummary getMonthlySummary(
             Long householdId,
             int year,
             int month) {
 
-        Household household = householdRepository.findById(householdId)
-                .orElseThrow(() ->
-                        new RuntimeException("Household not found"));
+        Household household =
+                householdRepository.findById(householdId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Household not found"
+                                )
+                        );
 
-        YearMonth yearMonth = YearMonth.of(year, month);
 
-        LocalDate startDate = yearMonth.atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
+        YearMonth yearMonth =
+                YearMonth.of(year, month);
+
+
+        LocalDate startDate =
+                yearMonth.atDay(1);
+
+        LocalDate endDate =
+                yearMonth.atEndOfMonth();
+
+
+        // =========================
+        // GENERATION
+        // =========================
 
         List<GenerationLog> generations =
-                generationRepository.findByGenerationDateBetween(
-                        startDate,
-                        endDate);
+                generationRepository
+                        .findByGenerationDateBetween(
+                                startDate,
+                                endDate
+                        );
+
+
+        double totalGeneration = 0;
+
+
+        for (GenerationLog generation : generations) {
+
+            if (generation.getUnitsGenerated() == null ||
+                    generation.getUnitsGenerated() < 0) {
+
+                throw new RuntimeException(
+                        "Invalid generation data found"
+                );
+            }
+
+            totalGeneration +=
+                    generation.getUnitsGenerated();
+        }
+
+
+        // =========================
+        // GENERATION SHARE
+        // =========================
+
+        double allocationRatio =
+                household.getAllocationRatio();
+
+
+        double generationShare =
+                totalGeneration
+                        * allocationRatio
+                        / 100.0;
+
+
+        if (generationShare > totalGeneration) {
+
+            throw new RuntimeException(
+                    "Household generation share cannot exceed total generation"
+            );
+        }
+
+
+        // =========================
+        // CONSUMPTION
+        // =========================
 
         List<ConsumptionLog> consumptions =
                 consumptionRepository
                         .findByHouseholdIdAndConsumptionDateBetween(
                                 householdId,
                                 startDate,
-                                endDate);
+                                endDate
+                        );
 
-        double totalGeneration = 0;
-
-        for (GenerationLog generation : generations) {
-            totalGeneration += generation.getUnitsGenerated();
-        }
-
-        double generationShare =
-                totalGeneration
-                        * household.getAllocationRatio()
-                        / 100.0;
 
         double totalConsumption = 0;
 
+
         for (ConsumptionLog consumption : consumptions) {
-            totalConsumption += consumption.getUnitsConsumed();
+
+            if (consumption.getUnitsConsumed() == null ||
+                    consumption.getUnitsConsumed() < 0) {
+
+                throw new RuntimeException(
+                        "Invalid consumption data found"
+                );
+            }
+
+            totalConsumption +=
+                    consumption.getUnitsConsumed();
         }
+
+
+        // =========================
+        // NET ENERGY
+        // =========================
 
         double netExported =
                 calculateNetExported(
                         generationShare,
-                        totalConsumption);
+                        totalConsumption
+                );
 
-        NetUsageSummary summary = new NetUsageSummary();
+
+        // =========================
+        // CREATE RESPONSE
+        // =========================
+
+        NetUsageSummary summary =
+                new NetUsageSummary();
+
 
         summary.setHouseholdId(
-                household.getHouseholdId());
+                household.getHouseholdId()
+        );
+
 
         summary.setHouseholdName(
-                household.getHouseholdName());
+                household.getHouseholdName()
+        );
 
-        summary.setMonth(yearMonth);
+
+        summary.setMonth(
+                yearMonth
+        );
+
 
         summary.setTotalGenerationShare(
-                generationShare);
+                generationShare
+        );
+
 
         summary.setTotalConsumption(
-                totalConsumption);
+                totalConsumption
+        );
+
 
         summary.setNetExported(
-                netExported);
+                netExported
+        );
+
 
         return summary;
+    }
+
+
+    // =========================================================
+    // GET CURRENT MONTH SUMMARY FOR ALL HOUSEHOLDS
+    // =========================================================
+
+    public List<NetUsageSummary> getCurrentMonthSummary() {
+
+        YearMonth currentMonth =
+                YearMonth.now();
+
+
+        int year =
+                currentMonth.getYear();
+
+
+        int month =
+                currentMonth.getMonthValue();
+
+
+        List<Household> households =
+                householdRepository.findAll();
+
+
+        List<NetUsageSummary> summaries =
+                new ArrayList<>();
+
+
+        for (Household household : households) {
+
+            NetUsageSummary summary =
+                    getMonthlySummary(
+                            household.getHouseholdId(),
+                            year,
+                            month
+                    );
+
+
+            summaries.add(summary);
+        }
+
+
+        return summaries;
     }
 }

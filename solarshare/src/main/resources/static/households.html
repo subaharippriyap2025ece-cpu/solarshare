@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SolarShare | Households</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .household-page {
+            padding: 45px 0 80px;
+        }
+
+        .household-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .household-card {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        .household-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            background: #edf8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .household-card h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .household-card p {
+            margin: 0;
+            color: #68756c;
+        }
+
+        .household-section {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+        }
+
+        .section-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-top h2 {
+            margin: 0 0 7px;
+        }
+
+        .section-top p {
+            margin: 0;
+            color: #68756c;
+        }
+
+        .household-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .household-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .household-table th {
+            background: #f3f7f4;
+            text-align: left;
+            padding: 16px;
+        }
+
+        .household-table td {
+            padding: 17px 16px;
+            border-bottom: 1px solid #e7ece8;
+        }
+
+        .household-name {
+            font-weight: 700;
+            color: #183a24;
+        }
+
+        .allocation-badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #e9f7ed;
+            color: #19723b;
+            font-weight: 700;
+        }
+
+        .delete-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: 600;
+            background: #ffecec;
+            color: #c62828;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close-button {
+            border: none;
+            background: #f1f4f2;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            border: 1px solid #d4dfd8;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #218447;
+        }
+
+        .save-button {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            background: #218447;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #176b37;
+        }
+
+        .message-box {
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .message-success {
+            display: block;
+            background: #edf9f0;
+            color: #21733c;
+        }
+
+        .message-error {
+            display: block;
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 18px;
+            background: linear-gradient(
+                    120deg,
+                    #edf9f0,
+                    #fffbea
+            );
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #176b37;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            color: #596960;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 800px) {
+
+            .household-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="container">
+
+        <div class="logo">
+            SolarShare
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="generation.html">
+                Generation
+            </a>
+
+            <a href="households.html"
+               class="active">
+                Households
+            </a>
+
+            <a href="consumption.html">
+                Consumption
+            </a>
+
+            <a href="net-usage.html">
+                Net Usage
+            </a>
+
+            <a href="installation.html">
+                Installation
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <span class="badge">
+            COMMUNITY
+        </span>
+
+        <h1>
+            Households
+        </h1>
+
+        <p>
+            Manage households participating in
+            SolarShare community energy sharing.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container household-page">
+
+
+    <!-- ================= STATS ================= -->
+
+    <div class="household-stats">
+
+
+        <div class="household-card">
+
+            <div class="household-icon">
+                🏠
+            </div>
+
+            <h2 id="householdCount">
+                0
+            </h2>
+
+            <p>
+                Total Households
+            </p>
+
+        </div>
+
+
+        <div class="household-card">
+
+            <div class="household-icon">
+                🌱
+            </div>
+
+            <h2 id="totalAllocation">
+                0%
+            </h2>
+
+            <p>
+                Total Allocation
+            </p>
+
+        </div>
+
+
+        <div class="household-card">
+
+            <div class="household-icon">
+                ☀️
+            </div>
+
+            <h2 id="averageAllocation">
+                0%
+            </h2>
+
+            <p>
+                Average Allocation
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TABLE ================= -->
+
+    <div class="household-section">
+
+
+        <div class="section-top">
+
+            <div>
+
+                <h2>
+                    Household Records
+                </h2>
+
+                <p>
+                    Add and manage participating households.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="btn btn-primary"
+                    onclick="openAddModal()">
+
+                + Add Household
+
+            </button>
+
+        </div>
+
+
+        <div class="household-table-wrapper">
+
+            <table class="household-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Household
+                    </th>
+
+                    <th>
+                        Address
+                    </th>
+
+                    <th>
+                        Allocation Ratio
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="householdTable">
+
+                <tr>
+
+                    <td colspan="5"
+                        style="text-align:center; padding:30px;">
+
+                        Loading...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div id="pageMessage"
+             class="message-box">
+        </div>
+
+
+        <!-- INFO -->
+
+        <div class="info-box">
+
+            <h3>
+                🌱 Community Sharing
+            </h3>
+
+            <p>
+                The allocation ratio determines the
+                percentage of shared solar generation
+                allocated to each household.
+                The value must be greater than 0
+                and cannot exceed 100%.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- ================= MODAL ================= -->
+
+<div id="householdModal"
+     class="modal-overlay">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add Household
+            </h2>
+
+            <button
+                    class="close-button"
+                    onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="householdForm">
+
+
+            <div class="form-group">
+
+                <label for="householdName">
+                    Household Name
+                </label>
+
+                <input
+                        type="text"
+                        id="householdName"
+                        placeholder="Enter household name"
+                        required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="address">
+                    Address
+                </label>
+
+                <input
+                        type="text"
+                        id="address"
+                        placeholder="Enter address"
+                        required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="allocationRatio">
+                    Allocation Ratio (%)
+                </label>
+
+                <input
+                        type="number"
+                        id="allocationRatio"
+                        min="0.01"
+                        max="100"
+                        step="0.01"
+                        placeholder="Example: 25"
+                        required>
+
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="save-button">
+
+                Add Household
+
+            </button>
+
+
+        </form>
+
+
+        <div id="modalMessage"
+             class="message-box">
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+    const API_URL =
+        "http://localhost:8080/api/households";
+
+
+    /* =========================
+       LOAD HOUSEHOLDS
+    ========================= */
+
+    async function loadHouseholds() {
+
+        const table =
+            document.getElementById(
+                "householdTable"
+            );
+
+
+        try {
+
+            const response =
+                await fetch(API_URL);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "HTTP " + response.status
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            table.innerHTML = "";
+
+
+            if (!data || data.length === 0) {
+
+                table.innerHTML = `
+
+                <tr>
+
+                    <td colspan="5"
+                        style="text-align:center; padding:30px;">
+
+                        No households found.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+                updateStats([]);
+
+                return;
+
+            }
+
+
+            data.forEach(item => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                <td>
+                    ${item.householdId}
+                </td>
+
+                <td>
+
+                    <span class="household-name">
+
+                        ${item.householdName || "-"}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${item.address || "-"}
+                </td>
+
+                <td>
+
+                    <span class="allocation-badge">
+
+                        ${Number(
+                    item.allocationRatio || 0
+                ).toFixed(2)}%
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteHousehold(
+                            ${item.householdId}
+                        )">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+                table.appendChild(row);
+
+            });
+
+
+            updateStats(data);
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Household error:",
+                error
+            );
+
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="5"
+                    style="text-align:center; padding:30px; color:#c62828;">
+
+                    Unable to load households.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        }
+
+    }
+
+
+    /* =========================
+       UPDATE STATS
+    ========================= */
+
+    function updateStats(data) {
+
+        let totalAllocation = 0;
+
+
+        data.forEach(item => {
+
+            totalAllocation +=
+                Number(
+                    item.allocationRatio || 0
+                );
+
+        });
+
+
+        const average =
+            data.length > 0
+                ? totalAllocation / data.length
+                : 0;
+
+
+        document.getElementById(
+            "householdCount"
+        ).textContent =
+            data.length;
+
+
+        document.getElementById(
+            "totalAllocation"
+        ).textContent =
+            totalAllocation.toFixed(2) + "%";
+
+
+        document.getElementById(
+            "averageAllocation"
+        ).textContent =
+            average.toFixed(2) + "%";
+
+    }
+
+
+    /* =========================
+       OPEN MODAL
+    ========================= */
+
+    function openAddModal() {
+
+        document.getElementById(
+            "householdForm"
+        ).reset();
+
+
+        document.getElementById(
+            "modalMessage"
+        ).innerHTML = "";
+
+
+        document.getElementById(
+            "householdModal"
+        ).style.display =
+            "flex";
+
+    }
+
+
+    /* =========================
+       CLOSE MODAL
+    ========================= */
+
+    function closeModal() {
+
+        document.getElementById(
+            "householdModal"
+        ).style.display =
+            "none";
+
+    }
+
+
+    /* =========================
+       ADD HOUSEHOLD
+    ========================= */
+
+    document.getElementById(
+        "householdForm"
+    ).addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const householdName =
+                document.getElementById(
+                    "householdName"
+                ).value.trim();
+
+
+            const address =
+                document.getElementById(
+                    "address"
+                ).value.trim();
+
+
+            const allocationRatio =
+                Number(
+                    document.getElementById(
+                        "allocationRatio"
+                    ).value
+                );
+
+
+            if (!householdName) {
+
+                showModalMessage(
+                    "Please enter household name.",
+                    false
+                );
+
+                return;
+
+            }
+
+
+            if (!address) {
+
+                showModalMessage(
+                    "Please enter address.",
+                    false
+                );
+
+                return;
+
+            }
+
+
+            if (
+                allocationRatio <= 0 ||
+                allocationRatio > 100
+            ) {
+
+                showModalMessage(
+                    "Allocation ratio must be greater than 0 and cannot exceed 100.",
+                    false
+                );
+
+                return;
+
+            }
+
+
+            const body = {
+
+                householdName:
+                householdName,
+
+                address:
+                address,
+
+                allocationRatio:
+                allocationRatio
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(body)
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+
+                    throw new Error(
+                        errorText ||
+                        "Request failed"
+                    );
+
+                }
+
+
+                closeModal();
+
+
+                showPageMessage(
+                    "Household added successfully.",
+                    true
+                );
+
+
+                await loadHouseholds();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Add household error:",
+                    error
+                );
+
+
+                showModalMessage(
+                    "Failed to connect to SolarShare backend. " +
+                    error.message,
+                    false
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       DELETE HOUSEHOLD
+    ========================= */
+
+    async function deleteHousehold(id) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to delete this household?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Delete failed"
+                );
+
+            }
+
+
+            showPageMessage(
+                "Household deleted successfully.",
+                true
+            );
+
+
+            await loadHouseholds();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Delete household error:",
+                error
+            );
+
+
+            showPageMessage(
+                "Failed to delete household.",
+                false
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    function showModalMessage(
+        message,
+        success
+    ) {
+
+        const element =
+            document.getElementById(
+                "modalMessage"
+            );
+
+
+        element.textContent =
+            message;
+
+
+        element.className =
+            "message-box " +
+            (
+                success
+                    ? "message-success"
+                    : "message-error"
+            );
+
+    }
+
+
+    function showPageMessage(
+        message,
+        success
+    ) {
+
+        const element =
+            document.getElementById(
+                "pageMessage"
+            );
+
+
+        element.textContent =
+            message;
+
+
+        element.className =
+            "message-box " +
+            (
+                success
+                    ? "message-success"
+                    : "message-error"
+            );
+
+    }
+
+
+    /* =========================
+       START
+    ========================= */
+
+    loadHouseholds();
+
+
+</script>
+
+
+</body>
+
+</html>

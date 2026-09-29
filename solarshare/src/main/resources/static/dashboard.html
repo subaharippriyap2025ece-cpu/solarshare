@@ -1,0 +1,352 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SolarShare | Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">&#9728;</span>
+        SolarShare
+    </a>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="generation.html">Generation</a>
+        <a href="households.html">Households</a>
+        <a href="consumption.html">Consumption</a>
+        <a href="net-usage.html">Net Usage</a>
+        <a href="installation.html">Installation</a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <div class="badge">
+                &#128200; Energy Overview
+            </div>
+
+            <h1>Solar Dashboard</h1>
+
+            <p>
+                Monitor generation, consumption, households
+                and your community's net energy usage.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="cards-4">
+
+        <div class="stat-card">
+            <div class="stat-icon">&#9728;</div>
+
+            <h2 id="totalGeneration">0 kWh</h2>
+
+            <p>Total Generation</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">&#9889;</div>
+
+            <h2 id="totalConsumption">0 kWh</h2>
+
+            <p>Total Consumption</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">&#127968;</div>
+
+            <h2 id="totalHouseholds">0</h2>
+
+            <p>Households</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">&#127807;</div>
+
+            <h2 id="netEnergy">0 kWh</h2>
+
+            <p>Net Energy</p>
+        </div>
+
+    </section>
+
+
+    <section class="dashboard-grid">
+
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <h2>Energy Overview</h2>
+
+                <p>Current generation and consumption data</p>
+
+            </div>
+
+            <div class="chart" id="dashboardChart"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <h2>Quick Actions</h2>
+
+                <p>Manage SolarShare</p>
+
+            </div>
+
+            <div style="display:grid;gap:12px;">
+
+                <a href="generation.html"
+                   class="btn btn-primary">
+                    + Add Generation
+                </a>
+
+                <a href="households.html"
+                   class="btn btn-secondary">
+                    + Add Household
+                </a>
+
+                <a href="consumption.html"
+                   class="btn btn-secondary">
+                    + Add Consumption
+                </a>
+
+                <a href="net-usage.html"
+                   class="btn btn-secondary">
+                    View Net Usage
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <div class="section-title">
+
+            <h2>SolarShare Modules</h2>
+
+            <p>Explore all areas of the platform.</p>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <a href="generation.html" class="info-card">
+                <div class="info-card-icon">&#9728;</div>
+                <h3>Generation</h3>
+                <p>Record solar energy generation.</p>
+            </a>
+
+            <a href="households.html" class="info-card">
+                <div class="info-card-icon">&#127968;</div>
+                <h3>Households</h3>
+                <p>Manage participating households.</p>
+            </a>
+
+            <a href="consumption.html" class="info-card">
+                <div class="info-card-icon">&#128161;</div>
+                <h3>Consumption</h3>
+                <p>Monitor electricity consumption.</p>
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+    SolarShare &copy; 2026
+</footer>
+
+
+<script>
+
+    async function loadDashboard() {
+
+        try {
+
+            const [
+                generationResponse,
+                consumptionResponse,
+                householdResponse
+            ] = await Promise.all([
+                fetch("api/generations"),
+                fetch("api/consumptions"),
+                fetch("api/households")
+            ]);
+
+
+            const generations =
+                await generationResponse.json();
+
+            const consumptions =
+                await consumptionResponse.json();
+
+            const households =
+                await householdResponse.json();
+
+
+            let generationTotal = 0;
+
+            generations.forEach(item => {
+                generationTotal +=
+                    Number(item.unitsGenerated || 0);
+            });
+
+
+            let consumptionTotal = 0;
+
+            consumptions.forEach(item => {
+                consumptionTotal +=
+                    Number(item.unitsConsumed || 0);
+            });
+
+
+            document.getElementById(
+                "totalGeneration"
+            ).textContent =
+                generationTotal.toFixed(2) + " kWh";
+
+
+            document.getElementById(
+                "totalConsumption"
+            ).textContent =
+                consumptionTotal.toFixed(2) + " kWh";
+
+
+            document.getElementById(
+                "totalHouseholds"
+            ).textContent =
+                households.length;
+
+
+            document.getElementById(
+                "netEnergy"
+            ).textContent =
+                (generationTotal - consumptionTotal).toFixed(2)
+                + " kWh";
+
+
+            renderDashboardChart(
+                generationTotal,
+                consumptionTotal
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    function renderDashboardChart(
+        generation,
+        consumption
+    ) {
+
+        const chart =
+            document.getElementById("dashboardChart");
+
+        const max =
+            Math.max(generation, consumption, 1);
+
+
+        const generationHeight =
+            Math.max(
+                generation / max * 80,
+                8
+            );
+
+
+        const consumptionHeight =
+            Math.max(
+                consumption / max * 80,
+                8
+            );
+
+
+        chart.innerHTML = `
+
+        <div class="chart-column">
+
+            <span class="chart-value">
+                ${generation.toFixed(1)}
+            </span>
+
+            <div
+                class="chart-bar"
+                style="height:${generationHeight}%">
+            </div>
+
+            <span class="chart-label">
+                Generation
+            </span>
+
+        </div>
+
+
+        <div class="chart-column">
+
+            <span class="chart-value">
+                ${consumption.toFixed(1)}
+            </span>
+
+            <div
+                class="chart-bar"
+                style="height:${consumptionHeight}%">
+            </div>
+
+            <span class="chart-label">
+                Consumption
+            </span>
+
+        </div>
+
+    `;
+
+    }
+
+
+    loadDashboard();
+
+</script>
+
+</body>
+</html>

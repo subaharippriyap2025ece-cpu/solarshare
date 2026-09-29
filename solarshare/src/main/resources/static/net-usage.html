@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SolarShare | Net Usage</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           NET USAGE PAGE
+        ========================= */
+
+        .net-page {
+            padding: 50px 0 80px;
+        }
+
+        .net-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .net-card {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        .net-card-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            background: #edf8f0;
+        }
+
+        .net-card h2 {
+            font-size: 32px;
+            margin: 0 0 8px;
+        }
+
+        .net-card p {
+            color: #68756c;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .net-table-card {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 22px;
+            padding: 32px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+        }
+
+        .net-table-header {
+            margin-bottom: 25px;
+        }
+
+        .net-table-header h2 {
+            font-size: 32px;
+            margin: 0 0 10px;
+        }
+
+        .net-table-header p {
+            color: #68756c;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .net-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .net-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .net-table th {
+            background: #f3f7f4;
+            color: #536158;
+            text-align: left;
+            padding: 18px 16px;
+            font-size: 15px;
+        }
+
+        .net-table td {
+            padding: 20px 16px;
+            border-bottom: 1px solid #e7ece8;
+            color: #333;
+        }
+
+        .net-table tbody tr:hover {
+            background: #fafcfb;
+        }
+
+        .household-name {
+            font-weight: 700;
+            color: #183a24;
+        }
+
+        .generation-badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #e9f7ed;
+            color: #19723b;
+            font-weight: 700;
+        }
+
+        .net-badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #e9f7ed;
+            color: #19723b;
+            font-weight: 700;
+        }
+
+        .total-row {
+            background: #f5faf6;
+            font-weight: 700;
+        }
+
+        .total-row td {
+            border-bottom: none;
+            padding: 20px 16px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 35px !important;
+            color: #68756c;
+        }
+
+        .error-box {
+            margin-top: 25px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: #fff0f0;
+            color: #c62828;
+            border: 1px solid #ffd0d0;
+        }
+
+        .success-box {
+            margin-top: 25px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: #edf9f0;
+            color: #21733c;
+            border: 1px solid #cdebd4;
+        }
+
+        .retry-button {
+            margin-top: 12px;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: #218447;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .retry-button:hover {
+            background: #176b37;
+        }
+
+        @media (max-width: 800px) {
+
+            .net-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .net-table-card {
+                padding: 20px;
+            }
+
+            .net-table-header h2 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="container">
+
+        <div class="logo">
+            SolarShare
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="generation.html">
+                Generation
+            </a>
+
+            <a href="households.html">
+                Households
+            </a>
+
+            <a href="consumption.html">
+                Consumption
+            </a>
+
+            <a href="net-usage.html"
+               class="active">
+                Net Usage
+            </a>
+
+            <a href="installation.html">
+                Installation
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <span class="badge">
+            ENERGY BALANCE
+        </span>
+
+        <h1>
+            Net Usage
+        </h1>
+
+        <p>
+            Monitor household solar generation,
+            consumption and exported energy.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container net-page">
+
+
+    <!-- =================================================
+         SUMMARY CARDS
+    ================================================== -->
+
+    <div class="net-summary">
+
+
+        <!-- GENERATION -->
+
+        <div class="net-card">
+
+            <div class="net-card-icon">
+                ☀️
+            </div>
+
+            <h2 id="totalGeneration">
+                0.00 kWh
+            </h2>
+
+            <p>
+                Total Generation Share
+            </p>
+
+        </div>
+
+
+        <!-- CONSUMPTION -->
+
+        <div class="net-card">
+
+            <div class="net-card-icon">
+                ⚡
+            </div>
+
+            <h2 id="totalConsumption">
+                0.00 kWh
+            </h2>
+
+            <p>
+                Total Consumption
+            </p>
+
+        </div>
+
+
+        <!-- NET -->
+
+        <div class="net-card">
+
+            <div class="net-card-icon">
+                🌱
+            </div>
+
+            <h2 id="netEnergy">
+                0.00 kWh
+            </h2>
+
+            <p>
+                Net Exported
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <div class="net-table-card">
+
+
+        <div class="net-table-header">
+
+            <h2>
+                Monthly Household Summary
+            </h2>
+
+            <p>
+                Net generation and consumption information
+                from SolarShare.
+            </p>
+
+        </div>
+
+
+        <div class="net-table-wrapper">
+
+            <table class="net-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Household
+                    </th>
+
+                    <th>
+                        Month
+                    </th>
+
+                    <th>
+                        Generation Share
+                    </th>
+
+                    <th>
+                        Consumption
+                    </th>
+
+                    <th>
+                        Net Exported
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="netUsageTable">
+
+                <tr>
+
+                    <td colspan="5"
+                        class="loading">
+
+                        Loading net usage...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+
+        <div id="message">
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+    /*
+        IMPORTANT
+
+        Your Spring Boot application runs on port 8080.
+
+        Therefore we explicitly use:
+
+        http://localhost:8080/api/net-usage/monthly-summary
+
+        This also works if IntelliJ opens the HTML preview
+        using port 63342.
+    */
+
+    const API_URL =
+        "http://localhost:8080/api/net-usage/monthly-summary";
+
+
+    async function loadNetUsage() {
+
+
+        const table =
+            document.getElementById("netUsageTable");
+
+
+        const message =
+            document.getElementById("message");
+
+
+        try {
+
+
+            console.log(
+                "Connecting to:",
+                API_URL
+            );
+
+
+            const response =
+                await fetch(API_URL);
+
+
+            console.log(
+                "API response status:",
+                response.status
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Server returned HTTP " +
+                    response.status
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Net Usage Data:",
+                data
+            );
+
+
+            /*
+                Clear loading message
+            */
+
+            table.innerHTML = "";
+
+
+            /*
+                Check for empty data
+            */
+
+            if (!Array.isArray(data) ||
+                data.length === 0) {
+
+
+                table.innerHTML = `
+
+                <tr>
+
+                    <td colspan="5"
+                        class="loading">
+
+                        No net usage records found.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+                updateCards([]);
+
+
+                return;
+
+            }
+
+
+            /*
+                Variables for totals
+            */
+
+            let totalGeneration = 0;
+
+            let totalConsumption = 0;
+
+            let totalNetExported = 0;
+
+
+            /*
+                Create table rows
+            */
+
+            data.forEach(item => {
+
+
+                const generation =
+                    Number(
+                        item.totalGenerationShare || 0
+                    );
+
+
+                const consumption =
+                    Number(
+                        item.totalConsumption || 0
+                    );
+
+
+                const netExported =
+                    Number(
+                        item.netExported || 0
+                    );
+
+
+                totalGeneration +=
+                    generation;
+
+
+                totalConsumption +=
+                    consumption;
+
+
+                totalNetExported +=
+                    netExported;
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                <td>
+
+                    <span class="household-name">
+
+                        ${item.householdName || "Unknown"}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${item.month || "-"}
+
+                </td>
+
+
+                <td>
+
+                    <span class="generation-badge">
+
+                        ${generation.toFixed(2)} kWh
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${consumption.toFixed(2)} kWh
+
+                </td>
+
+
+                <td>
+
+                    <span class="net-badge">
+
+                        ${netExported.toFixed(2)} kWh
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+                table.appendChild(row);
+
+
+            });
+
+
+            /*
+                Add total row
+            */
+
+            const totalRow =
+                document.createElement("tr");
+
+
+            totalRow.className =
+                "total-row";
+
+
+            totalRow.innerHTML = `
+
+            <td>
+                TOTAL
+            </td>
+
+            <td>
+                -
+            </td>
+
+            <td>
+                ${totalGeneration.toFixed(2)} kWh
+            </td>
+
+            <td>
+                ${totalConsumption.toFixed(2)} kWh
+            </td>
+
+            <td>
+                ${totalNetExported.toFixed(2)} kWh
+            </td>
+
+        `;
+
+
+            table.appendChild(totalRow);
+
+
+            /*
+                Update summary cards
+            */
+
+            document.getElementById(
+                "totalGeneration"
+            ).textContent =
+                totalGeneration.toFixed(2)
+                + " kWh";
+
+
+            document.getElementById(
+                "totalConsumption"
+            ).textContent =
+                totalConsumption.toFixed(2)
+                + " kWh";
+
+
+            document.getElementById(
+                "netEnergy"
+            ).textContent =
+                totalNetExported.toFixed(2)
+                + " kWh";
+
+
+            /*
+                Success message
+            */
+
+            message.innerHTML = `
+
+            <div class="success-box">
+
+                Net usage loaded successfully.
+
+            </div>
+
+        `;
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "NET USAGE ERROR:",
+                error
+            );
+
+
+            /*
+                Show error in table
+            */
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="5"
+                    class="loading">
+
+                    Unable to load net usage.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+            /*
+                Show useful error
+            */
+
+            message.innerHTML = `
+
+            <div class="error-box">
+
+                <strong>
+                    Unable to connect to SolarShare backend.
+                </strong>
+
+                <br><br>
+
+                Make sure Spring Boot is running
+                on port 8080.
+
+                <br>
+
+                Error:
+                ${error.message}
+
+                <br>
+
+                <button
+                    class="retry-button"
+                    onclick="loadNetUsage()">
+
+                    Retry
+
+                </button>
+
+            </div>
+
+        `;
+
+        }
+
+    }
+
+
+    /*
+        Load automatically when page opens
+    */
+
+    loadNetUsage();
+
+
+</script>
+
+
+</body>
+
+</html>

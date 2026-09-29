@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SolarShare | Consumption</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+            &#9889;
+        </span>
+
+        SolarShare
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="generation.html">
+            Generation
+        </a>
+
+        <a href="households.html">
+            Households
+        </a>
+
+        <a href="consumption.html"
+           class="active">
+            Consumption
+        </a>
+
+        <a href="net-usage.html">
+            Net Usage
+        </a>
+
+        <a href="installation.html">
+            Installation
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <div class="badge">
+                &#9889; Energy Usage
+            </div>
+
+            <h1>
+                Energy Consumption
+            </h1>
+
+            <p>
+                Track electricity consumption and understand
+                how energy is being used across your households.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="cards-4">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#9889;
+            </div>
+
+            <h2 id="totalConsumption">
+                0 kWh
+            </h2>
+
+            <p>
+                Total Consumption
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#128200;
+            </div>
+
+            <h2 id="consumptionRecords">
+                0
+            </h2>
+
+            <p>
+                Records
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#127968;
+            </div>
+
+            <h2 id="consumptionHouseholds">
+                0
+            </h2>
+
+            <p>
+                Household Records
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#127807;
+            </div>
+
+            <h2>
+                Smart
+            </h2>
+
+            <p>
+                Energy Monitoring
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+
+        <div class="section-title"
+             style="display:flex;justify-content:space-between;align-items:center;">
+
+            <div>
+
+                <h2>
+                    Consumption Records
+                </h2>
+
+                <p>
+                    Track electricity used by households.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="btn btn-primary"
+                    onclick="openConsumptionModal()">
+
+                + Add Consumption
+
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="data-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Household</th>
+
+                    <th>Date</th>
+
+                    <th>Units Consumed</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="consumptionTable">
+
+                <tr>
+
+                    <td colspan="5">
+                        Loading...
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+    SolarShare &copy; 2026
+</footer>
+
+
+<div class="modal"
+     id="consumptionModal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add Consumption
+            </h2>
+
+            <button
+                    class="close"
+                    onclick="closeConsumptionModal()">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <form id="consumptionForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Household ID
+                </label>
+
+                <input
+                        type="number"
+                        id="householdId"
+                        min="1"
+                        required
+                        placeholder="Example: 3">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Consumption Date
+                </label>
+
+                <input
+                        type="date"
+                        id="consumptionDate"
+                        required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Units Consumed (kWh)
+                </label>
+
+                <input
+                        type="number"
+                        id="unitsConsumed"
+                        min="0"
+                        step="0.01"
+                        required
+                        placeholder="Example: 30">
+
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="width:100%;">
+
+                Save Consumption
+
+            </button>
+
+        </form>
+
+
+        <div
+                id="consumptionMessage"
+                class="message">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+    document.getElementById(
+        "consumptionDate"
+    ).value =
+        new Date().toISOString().split("T")[0];
+
+
+    function openConsumptionModal() {
+
+        document.getElementById(
+            "consumptionModal"
+        ).classList.add("show");
+
+    }
+
+
+    function closeConsumptionModal() {
+
+        document.getElementById(
+            "consumptionModal"
+        ).classList.remove("show");
+
+    }
+
+
+    async function loadConsumptions() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "api/consumptions"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            let total = 0;
+
+
+            data.forEach(item => {
+
+                total +=
+                    Number(
+                        item.unitsConsumed || 0
+                    );
+
+            });
+
+
+            document.getElementById(
+                "totalConsumption"
+            ).textContent =
+                total.toFixed(2) + " kWh";
+
+
+            document.getElementById(
+                "consumptionRecords"
+            ).textContent =
+                data.length;
+
+
+            const households =
+                new Set(
+                    data.map(
+                        item => item.householdId
+                    )
+                );
+
+
+            document.getElementById(
+                "consumptionHouseholds"
+            ).textContent =
+                households.size;
+
+
+            renderConsumptionTable(data);
+
+
+        } catch (error) {
+
+            document.getElementById(
+                "consumptionTable"
+            ).innerHTML = `
+
+            <tr>
+
+                <td colspan="5">
+                    Unable to load consumption data.
+                </td>
+
+            </tr>
+
+        `;
+
+        }
+
+    }
+
+
+    function renderConsumptionTable(data) {
+
+        const table =
+            document.getElementById(
+                "consumptionTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+        if (data.length === 0) {
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="5">
+                    No consumption records found.
+                </td>
+
+            </tr>
+
+        `;
+
+            return;
+
+        }
+
+
+        [...data].reverse().forEach(item => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+            <td>
+                #${item.consumptionId}
+            </td>
+
+            <td>
+                Household #${item.householdId}
+            </td>
+
+            <td>
+                ${item.consumptionDate}
+            </td>
+
+            <td>
+
+                <span class="badge-green">
+
+                    ${Number(
+                item.unitsConsumed
+            ).toFixed(2)}
+                    kWh
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="btn btn-danger"
+                    onclick="deleteConsumption(
+                        ${item.consumptionId}
+                    )">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        `;
+
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
+    document.getElementById(
+        "consumptionForm"
+    ).addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const householdId =
+                Number(
+                    document.getElementById(
+                        "householdId"
+                    ).value
+                );
+
+
+            const date =
+                document.getElementById(
+                    "consumptionDate"
+                ).value;
+
+
+            const units =
+                Number(
+                    document.getElementById(
+                        "unitsConsumed"
+                    ).value
+                );
+
+
+            if (units < 0) {
+
+                showConsumptionMessage(
+                    "Consumption cannot be negative.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "api/consumptions",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                householdId:
+                                householdId,
+
+                                consumptionDate:
+                                date,
+
+                                unitsConsumed:
+                                units
+
+                            })
+
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const error =
+                        await response
+                            .json()
+                            .catch(() => null);
+
+
+                    throw new Error(
+                        error?.message ||
+                        "Could not save consumption."
+                    );
+
+                }
+
+
+                showConsumptionMessage(
+                    "Consumption added successfully.",
+                    "success"
+                );
+
+
+                document.getElementById(
+                    "consumptionForm"
+                ).reset();
+
+
+                document.getElementById(
+                    "consumptionDate"
+                ).value =
+                    new Date()
+                        .toISOString()
+                        .split("T")[0];
+
+
+                await loadConsumptions();
+
+
+                setTimeout(
+                    closeConsumptionModal,
+                    700
+                );
+
+
+            } catch (error) {
+
+                showConsumptionMessage(
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+
+    function showConsumptionMessage(
+        text,
+        type
+    ) {
+
+        const message =
+            document.getElementById(
+                "consumptionMessage"
+            );
+
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+    }
+
+
+    async function deleteConsumption(id) {
+
+        if (!confirm(
+            "Delete this consumption record?"
+        )) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "api/consumptions/" + id,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Could not delete record."
+                );
+
+            }
+
+
+            loadConsumptions();
+
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    }
+
+
+    loadConsumptions();
+
+</script>
+
+</body>
+</html>

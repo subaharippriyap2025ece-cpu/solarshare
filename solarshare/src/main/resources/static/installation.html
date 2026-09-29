@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SolarShare | Installation</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+            &#9728;
+        </span>
+
+        SolarShare
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="generation.html">
+            Generation
+        </a>
+
+        <a href="households.html">
+            Households
+        </a>
+
+        <a href="consumption.html">
+            Consumption
+        </a>
+
+        <a href="net-usage.html">
+            Net Usage
+        </a>
+
+        <a href="installation.html"
+           class="active">
+            Installation
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <div class="badge">
+                &#9728; Solar Infrastructure
+            </div>
+
+            <h1>
+                Solar Installation
+            </h1>
+
+            <p>
+                View the solar installation information
+                connected to the SolarShare platform.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="cards-4">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#9728;
+            </div>
+
+            <h2 id="installationCount">
+                0
+            </h2>
+
+            <p>
+                Installations
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#127793;
+            </div>
+
+            <h2>
+                Solar
+            </h2>
+
+            <p>
+                Renewable Infrastructure
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#9889;
+            </div>
+
+            <h2>
+                Active
+            </h2>
+
+            <p>
+                Energy System
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                &#128200;
+            </div>
+
+            <h2>
+                Monitor
+            </h2>
+
+            <p>
+                System Tracking
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+
+        <div class="section-title">
+
+            <h2>
+                Installation Records
+            </h2>
+
+            <p>
+                Solar installation information from the backend.
+            </p>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="data-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Installation Information
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="installationTable">
+
+                <tr>
+
+                    <td colspan="2">
+                        Loading...
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer class="footer">
+    SolarShare &copy; 2026
+</footer>
+
+
+<script>
+
+
+    async function loadInstallations() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "api/installations"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            document.getElementById(
+                "installationCount"
+            ).textContent =
+                data.length;
+
+
+            renderInstallations(data);
+
+
+        } catch (error) {
+
+            document.getElementById(
+                "installationTable"
+            ).innerHTML = `
+
+            <tr>
+
+                <td colspan="2">
+
+                    Unable to load installation data.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        }
+
+    }
+
+
+    function renderInstallations(data) {
+
+        const table =
+            document.getElementById(
+                "installationTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+        if (data.length === 0) {
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="2">
+
+                    No installation records found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+            return;
+
+        }
+
+
+        data.forEach(item => {
+
+            const row =
+                document.createElement("tr");
+
+
+            const id =
+                item.installationId
+                ?? item.id
+                ?? "-";
+
+
+            const details =
+                Object.entries(item)
+                    .filter(
+                        ([key]) =>
+                            key !== "installationId" &&
+                            key !== "id"
+                    )
+                    .map(
+                        ([key, value]) =>
+                            `<strong>${key}</strong>: ${value}`
+                    )
+                    .join("<br>");
+
+
+            row.innerHTML = `
+
+            <td>
+                #${id}
+            </td>
+
+            <td>
+                ${details || "Installation record"}
+            </td>
+
+        `;
+
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
+    loadInstallations();
+
+</script>
+
+</body>
+</html>
